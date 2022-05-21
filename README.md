@@ -1,9 +1,13 @@
 # yeh
-<span style="color: #db4c3f; font-weight: 700">Y</span>et another <span style="color: #db4c3f; font-weight: 700">E</span>rror <span style="color: #db4c3f; font-weight: 700">H</span>andler for Golang
+<span style="color: #db4c3f; font-weight: 700">Y</span>et another <span style="color: #db4c3f; font-weight: 700">E</span>rror <span style="color: #db4c3f; font-weight: 700">H</span>andler for Golang. 
+
+*This Project An **Experimental** Idea For Error Handling Implementation With Go Generics*
 
 ## Examples
 
 ### Must
+
+Also Must has support Must0, Must2, Must3, Must4 and Must5 methods. For multiple return types.
 
 ```go
 func Test_Must(t *testing.T) {
