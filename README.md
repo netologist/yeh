@@ -1,7 +1,7 @@
 # yeh
 **Y**et another **E**rror **H**andler for Golang. 
 
-*This Project An **Experimental** Idea For Error Handling Implementation With Go Generics*
+*This Project An **Experimental** Idea For Error Handler Implementation With Go Generics*
 
 ## Examples
 
