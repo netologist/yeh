@@ -1,2 +1,2 @@
 # yeh
-Yet another Error Handler
+Yet another Error Handler for Golang
