@@ -1,11 +1,13 @@
-# yeh
-<span style="color: #db4c3f; font-weight: 700">Y</span>et another <span style="color: #db4c3f; font-weight: 700">E</span>rror <span style="color: #db4c3f; font-weight: 700">H</span>andler for Golang
+package yeh_test
 
-## Examples
+import (
+	"errors"
+	"fmt"
+	"github.com/hasanozgan/yeh"
+	"strings"
+	"testing"
+)
 
-### Must
-
-```go
 func Test_Must(t *testing.T) {
 	got := func() (err error) {
 		defer yeh.Recover(&err)
@@ -25,10 +27,7 @@ func Test_Must(t *testing.T) {
 		t.Errorf("Failed")
 	}
 }
-```
 
-### MustWith.Replace
-```go
 func Test_MustWith_Replace(t *testing.T) {
 	got := func() (err error) {
 		defer yeh.Recover(&err)
@@ -52,10 +51,7 @@ func Test_MustWith_Replace(t *testing.T) {
 		t.Errorf("Failed, unexpected error")
 	}
 }
-```
 
-### MustWith.Wrap
-```go
 func Test_MustWith_Wrap(t *testing.T) {
 	got := func() (err error) {
 		defer yeh.Recover(&err)
@@ -79,10 +75,7 @@ func Test_MustWith_Wrap(t *testing.T) {
 		t.Errorf("Failed, unexpected error")
 	}
 }
-```
 
-### MustWith.Callback
-```go
 func Test_MustWith_Callback(t *testing.T) {
 
 	got := func() (err error) {
@@ -112,4 +105,3 @@ func Test_MustWith_Callback(t *testing.T) {
 		t.Errorf("Failed, unexpected error")
 	}
 }
-```
