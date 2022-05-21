@@ -7,7 +7,7 @@
 
 ### Must
 
-Also Must has support Must0, Must2, Must3, Must4 and Must5 methods. For multiple return types.
+Also Must has support *Must0, Must2, Must3, Must4* and *Must5* methods. For multiple return types.
 
 ```go
 func Test_Must(t *testing.T) {
