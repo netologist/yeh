@@ -10,7 +10,7 @@ func Test_Must(t *testing.T) {
 	got := func() (err error) {
 		defer yeh.Recover(&err)
 
-		value := yeh.Must(fnTest(ErrFileNotFound))
+		value := yeh.Must(os.Open("file.not.exists.txt"))
 
 		fmt.Printf("Output: %d\n", value)
 
@@ -21,7 +21,7 @@ func Test_Must(t *testing.T) {
 		t.Errorf("Failed")
 	}
 
-	if got != ErrFileNotFound {
+	if got != fs.ErrExist {
 		t.Errorf("Failed")
 	}
 }
@@ -33,7 +33,7 @@ func Test_MustWith_Replace(t *testing.T) {
 	got := func() (err error) {
 		defer yeh.Recover(&err)
 
-		outputValue := yeh.MustWith(fnTest(ErrFileNotFound)).Replace(ErrCustomFile)
+		outputValue := yeh.MustWith(os.Open("file.not.exists.txt")).Replace(ErrCustomExists)
 
 		fmt.Printf("Output: %d\n", outputValue)
 
@@ -44,11 +44,11 @@ func Test_MustWith_Replace(t *testing.T) {
 		t.Errorf("Failed, unexpected error")
 	}
 
-	if got == ErrFileNotFound {
+	if got == fs.ErrExist {
 		t.Errorf("Failed, unexpected error")
 	}
 
-	if got != ErrCustomFile {
+	if got != ErrCustomExists {
 		t.Errorf("Failed, unexpected error")
 	}
 }
@@ -60,7 +60,7 @@ func Test_MustWith_Wrap(t *testing.T) {
 	got := func() (err error) {
 		defer yeh.Recover(&err)
 
-		outputValue := yeh.MustWith(fnTest(ErrFileNotFound)).Wrap(ErrCustomFile)
+		outputValue := yeh.MustWith(os.Open("file.not.exists.txt")).Wrap(ErrCustomExists)
 
 		fmt.Printf("Output: %d\n", outputValue)
 
@@ -71,11 +71,11 @@ func Test_MustWith_Wrap(t *testing.T) {
 		t.Errorf("Failed, unexpected error")
 	}
 
-	if !strings.HasPrefix(got.Error(), ErrFileNotFound.Error()) {
+	if !strings.HasPrefix(got.Error(), fs.ErrExist.Error()) {
 		t.Errorf("Failed, unexpected error")
 	}
 
-	if !errors.Is(got, ErrCustomFile) {
+	if !errors.Is(got, ErrCustomExists) {
 		t.Errorf("Failed, unexpected error")
 	}
 }
@@ -88,9 +88,9 @@ func Test_MustWith_Callback(t *testing.T) {
 	got := func() (err error) {
 		defer yeh.Recover(&err)
 
-		outputValue := yeh.MustWith(fnTest(ErrFileNotFound)).Callback(func(err error) error {
-			if errors.Is(err, ErrFileNotFound) {
-				return ErrCustomFile
+		outputValue := yeh.MustWith(os.Open("file.not.exists.txt")).Callback(func(err error) error {
+			if errors.Is(err, fs.) {
+				return ErrCustomExists
 			}
 			return err
 		})
@@ -104,11 +104,11 @@ func Test_MustWith_Callback(t *testing.T) {
 		t.Errorf("Failed, unexpected error")
 	}
 
-	if got == ErrFileNotFound {
+	if got == fs.ErrExist {
 		t.Errorf("Failed, unexpected error")
 	}
 
-	if got != ErrCustomFile {
+	if got != ErrCustomExists {
 		t.Errorf("Failed, unexpected error")
 	}
 }
