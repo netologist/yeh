@@ -1,5 +1,5 @@
 # yeh
-<span style="color: #db4c3f; font-weight: 700">Y</span>et another <span style="color: #db4c3f; font-weight: 700">E</span>rror <span style="color: #db4c3f; font-weight: 700">H</span>andler for Golang. 
+**Y**et another **E**rror **H**andler for Golang. 
 
 *This Project An **Experimental** Idea For Error Handling Implementation With Go Generics*
 
