@@ -1,14 +1,31 @@
 package yeh_test
 
 import (
-	"errors"
 	"fmt"
 	"github.com/hasanozgan/yeh"
-	"strings"
+
 	"testing"
 )
 
-func Test_Must(t *testing.T) {
+func Test_Must0_ShouldReturnError(t *testing.T) {
+	got := func() (err error) {
+		defer yeh.Recover(&err)
+
+		yeh.Must0(fnTest0(ErrFileNotFound))
+
+		return nil
+	}()
+
+	if got == nil {
+		t.Error("Failed")
+	}
+
+	if got != ErrFileNotFound {
+		t.Error("Failed")
+	}
+}
+
+func Test_Must_ShouldReturnError(t *testing.T) {
 	got := func() (err error) {
 		defer yeh.Recover(&err)
 
@@ -20,88 +37,170 @@ func Test_Must(t *testing.T) {
 	}()
 
 	if got == nil {
-		t.Errorf("Failed")
+		t.Error("Failed")
 	}
 
 	if got != ErrFileNotFound {
-		t.Errorf("Failed")
+		t.Error("Failed")
 	}
 }
 
-func Test_MustWith_Replace(t *testing.T) {
+func Test_Must2_ShouldReturnError(t *testing.T) {
 	got := func() (err error) {
 		defer yeh.Recover(&err)
 
-		outputValue := yeh.MustWith(fnTest(ErrFileNotFound)).Replace(ErrCustomFile)
+		value1, value2 := yeh.Must2(fnTest2(ErrFileNotFound))
 
-		fmt.Printf("Output: %d\n", outputValue)
+		fmt.Printf("Output: %d %d\n", value1, value2)
 
 		return nil
 	}()
 
 	if got == nil {
-		t.Errorf("Failed, unexpected error")
+		t.Error("Failed")
 	}
 
-	if got == ErrFileNotFound {
-		t.Errorf("Failed, unexpected error")
-	}
-
-	if got != ErrCustomFile {
-		t.Errorf("Failed, unexpected error")
+	if got != ErrFileNotFound {
+		t.Error("Failed")
 	}
 }
 
-func Test_MustWith_Wrap(t *testing.T) {
+func Test_Must3_ShouldReturnError(t *testing.T) {
 	got := func() (err error) {
 		defer yeh.Recover(&err)
 
-		outputValue := yeh.MustWith(fnTest(ErrFileNotFound)).Wrap(ErrCustomFile)
+		value1, value2, value3 := yeh.Must3(fnTest3(ErrFileNotFound))
 
-		fmt.Printf("Output: %d\n", outputValue)
+		fmt.Printf("Output: %d %d %d\n", value1, value2, value3)
 
 		return nil
 	}()
 
 	if got == nil {
-		t.Errorf("Failed, unexpected error")
+		t.Error("Failed")
 	}
 
-	if !strings.HasPrefix(got.Error(), ErrFileNotFound.Error()) {
-		t.Errorf("Failed, unexpected error")
-	}
-
-	if !errors.Is(got, ErrCustomFile) {
-		t.Errorf("Failed, unexpected error")
+	if got != ErrFileNotFound {
+		t.Error("Failed")
 	}
 }
 
-func Test_MustWith_Callback(t *testing.T) {
-
+func Test_Must4_ShouldReturnError(t *testing.T) {
 	got := func() (err error) {
 		defer yeh.Recover(&err)
 
-		outputValue := yeh.MustWith(fnTest(ErrFileNotFound)).Callback(func(err error) error {
-			if errors.Is(err, ErrFileNotFound) {
-				return ErrCustomFile
-			}
-			return err
-		})
+		value1, value2, value3, value4 := yeh.Must4(fnTest4(ErrFileNotFound))
 
-		fmt.Printf("Output: %d\n", outputValue)
+		fmt.Printf("Output: %d %d %d %d\n", value1, value2, value3, value4)
 
 		return nil
 	}()
 
 	if got == nil {
-		t.Errorf("Failed, unexpected error")
+		t.Error("Failed")
 	}
 
-	if got == ErrFileNotFound {
-		t.Errorf("Failed, unexpected error")
+	if got != ErrFileNotFound {
+		t.Error("Failed")
+	}
+}
+
+func Test_Must5_ShouldReturnError(t *testing.T) {
+	got := func() (err error) {
+		defer yeh.Recover(&err)
+
+		value1, value2, value3, value4, value5 := yeh.Must5(fnTest5(ErrFileNotFound))
+
+		fmt.Printf("Output: %d %d %d %d %d\n", value1, value2, value3, value4, value5)
+
+		return nil
+	}()
+
+	if got == nil {
+		t.Error("Failed")
 	}
 
-	if got != ErrCustomFile {
-		t.Errorf("Failed, unexpected error")
+	if got != ErrFileNotFound {
+		t.Error("Failed")
+	}
+}
+
+func Test_Must_ShouldReturnValue(t *testing.T) {
+	value1 := yeh.Must(fnTest(nil))
+
+	if value1 != 123 {
+		t.Error("Failed")
+	}
+}
+
+func Test_Must2_ShouldReturnValue(t *testing.T) {
+	value1, value2 := yeh.Must2(fnTest2(nil))
+
+	if value1 != 123 {
+		t.Error("Failed")
+	}
+
+	if value2 != 234 {
+		t.Error("Failed")
+	}
+}
+
+func Test_Must3_ShouldReturnValue(t *testing.T) {
+	value1, value2, value3 := yeh.Must3(fnTest3(nil))
+
+	if value1 != 123 {
+		t.Error("Failed")
+	}
+
+	if value2 != 234 {
+		t.Error("Failed")
+	}
+
+	if value3 != 345 {
+		t.Error("Failed")
+	}
+}
+
+func Test_Must4_ShouldReturnValue(t *testing.T) {
+	value1, value2, value3, value4 := yeh.Must4(fnTest4(nil))
+
+	if value1 != 123 {
+		t.Error("Failed")
+	}
+
+	if value2 != 234 {
+		t.Error("Failed")
+	}
+
+	if value3 != 345 {
+		t.Error("Failed")
+	}
+
+	if value4 != 456 {
+		t.Error("Failed")
+	}
+}
+
+func Test_Must5_ShouldReturnValue(t *testing.T) {
+	value1, value2, value3, value4, value5 := yeh.Must5(fnTest5(nil))
+
+	if value1 != 123 {
+		t.Error("Failed")
+	}
+
+	if value2 != 234 {
+		t.Error("Failed")
+	}
+
+	if value3 != 345 {
+		t.Error("Failed")
+	}
+
+	if value4 != 456 {
+		t.Error("Failed")
+	}
+
+	if value5 != 567 {
+		t.Error("Failed")
 	}
 }

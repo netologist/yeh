@@ -9,19 +9,19 @@ func Recover(err *error) {
 	if r := recover(); r != nil {
 		switch x := r.(type) {
 		case string:
-			if *err == nil {
-				*err = fmt.Errorf("%s", r)
-			} else {
-				*err = fmt.Errorf("%s: %s", (*err).Error(), r)
-			}
+			appendError(err, fmt.Errorf("%s", r))
 		case error:
-			if *err == nil {
-				*err = x
-			} else {
-				*err = fmt.Errorf("%s: %w", (*err).Error(), x)
-			}
+			appendError(err, x)
 		default:
-			*err = errors.New("unknown panic")
+			appendError(err, fmt.Errorf("%s", errors.New("unknown panic")))
 		}
+	}
+}
+
+func appendError(parent *error, err error) {
+	if *parent == nil {
+		*parent = err
+	} else {
+		*parent = fmt.Errorf("%s: %w", (*parent).Error(), err)
 	}
 }
