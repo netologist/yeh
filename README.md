@@ -41,7 +41,8 @@ func Test_MustWith_Replace(t *testing.T) {
 	got := func() (err error) {
 		defer yeh.Recover(&err)
 
-		outputValue := yeh.MustWith(os.Open("file.not.exists.txt")).Replace(ErrCustomExists)
+		outputValue := yeh.MustWith(os.Open("file.not.exists.txt"))
+		.Replace(ErrCustomExists)
 
 		fmt.Printf("Output: %d\n", outputValue)
 
