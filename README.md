@@ -31,7 +31,11 @@ func Test_Must(t *testing.T) {
 }
 ```
 
-### MustWith.Replace
+### MustWith
+
+Also Must has support *MustWith0, MustWith2, MustWith3, MustWith4* and *MustWith5* methods. For multiple return types.
+
+#### Replace
 ```go
 func Test_MustWith_Replace(t *testing.T) {
 	got := func() (err error) {
@@ -58,7 +62,7 @@ func Test_MustWith_Replace(t *testing.T) {
 }
 ```
 
-### MustWith.Wrap
+#### Wrap
 ```go
 func Test_MustWith_Wrap(t *testing.T) {
 	got := func() (err error) {
@@ -85,7 +89,7 @@ func Test_MustWith_Wrap(t *testing.T) {
 }
 ```
 
-### MustWith.Callback
+#### Callback
 ```go
 func Test_MustWith_Callback(t *testing.T) {
 
