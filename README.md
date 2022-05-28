@@ -10,25 +10,25 @@
 Also Must has support *Must0, Must2, Must3, Must4* and *Must5* methods. For multiple return types.
 
 ```go
-func Test_Must(t *testing.T) {
-	got := func() (err error) {
-		defer yeh.Recover(&err)
 
-		value := yeh.Must(os.Open("file.not.exists.txt"))
+got := func() (err error) {
+    defer yeh.Recover(&err)
 
-		fmt.Printf("Output: %d\n", value)
+    value := yeh.Must(os.Open("file.not.exists.txt"))
 
-		return nil
-	}()
+    fmt.Printf("Output: %d\n", value)
 
-	if got == nil {
-		t.Errorf("Failed")
-	}
+    return nil
+}()
 
-	if got != fs.ErrExist {
-		t.Errorf("Failed")
-	}
+if got == nil {
+    t.Errorf("Failed")
 }
+
+if got != fs.ErrExist {
+    t.Errorf("Failed")
+}
+
 ```
 
 ### MustWith
@@ -37,88 +37,87 @@ Also Must has support *MustWith0, MustWith2, MustWith3, MustWith4* and *MustWith
 
 #### Replace
 ```go
-func Test_MustWith_Replace(t *testing.T) {
-	got := func() (err error) {
-		defer yeh.Recover(&err)
 
-		outputValue := yeh.MustWith(os.Open("file.not.exists.txt"))
-		.Replace(ErrCustomExists)
+got := func() (err error) {
+    defer yeh.Recover(&err)
 
-		fmt.Printf("Output: %d\n", outputValue)
+    outputValue := yeh.MustWith(os.Open("file.not.exists.txt"))
+    .Replace(ErrCustomExists)
 
-		return nil
-	}()
+    fmt.Printf("Output: %d\n", outputValue)
 
-	if got == nil {
-		t.Errorf("Failed, unexpected error")
-	}
+    return nil
+}()
 
-	if got == fs.ErrExist {
-		t.Errorf("Failed, unexpected error")
-	}
-
-	if got != ErrCustomExists {
-		t.Errorf("Failed, unexpected error")
-	}
+if got == nil {
+    t.Errorf("Failed, unexpected error")
 }
+
+if got == fs.ErrExist {
+    t.Errorf("Failed, unexpected error")
+}
+
+if got != ErrCustomExists {
+    t.Errorf("Failed, unexpected error")
+}
+
 ```
 
 #### Wrap
 ```go
-func Test_MustWith_Wrap(t *testing.T) {
-	got := func() (err error) {
-		defer yeh.Recover(&err)
 
-		outputValue := yeh.MustWith(os.Open("file.not.exists.txt")).Wrap(ErrCustomExists)
+got := func() (err error) {
+	defer yeh.Recover(&err)
 
-		fmt.Printf("Output: %d\n", outputValue)
+	outputValue := yeh.MustWith(os.Open("file.not.exists.txt")).Wrap(ErrCustomExists)
 
-		return nil
-	}()
+	fmt.Printf("Output: %d\n", outputValue)
 
-	if got == nil {
-		t.Errorf("Failed, unexpected error")
-	}
+	return nil
+}()
 
-	if !strings.HasPrefix(got.Error(), fs.ErrExist.Error()) {
-		t.Errorf("Failed, unexpected error")
-	}
-
-	if !errors.Is(got, ErrCustomExists) {
-		t.Errorf("Failed, unexpected error")
-	}
+if got == nil {
+	t.Errorf("Failed, unexpected error")
 }
+
+if !strings.HasPrefix(got.Error(), fs.ErrExist.Error()) {
+	t.Errorf("Failed, unexpected error")
+}
+
+if !errors.Is(got, ErrCustomExists) {
+	t.Errorf("Failed, unexpected error")
+}
+
 ```
 
 #### Callback
 ```go
-func Test_MustWith_Callback(t *testing.T) {
 
-	got := func() (err error) {
-		defer yeh.Recover(&err)
+got := func() (err error) {
+	defer yeh.Recover(&err)
 
-		outputValue := yeh.MustWith(os.Open("file.not.exists.txt")).Callback(func(err error) error {
-			if errors.Is(err, fs.) {
-				return ErrCustomExists
-			}
-			return err
-		})
+	outputValue := yeh.MustWith(os.Open("file.not.exists.txt")).Callback(func(err error) error {
+		if errors.Is(err, fs.) {
+			return ErrCustomExists
+		}
+		return err
+	})
 
-		fmt.Printf("Output: %d\n", outputValue)
+	fmt.Printf("Output: %d\n", outputValue)
 
-		return nil
-	}()
+	return nil
+}()
 
-	if got == nil {
-		t.Errorf("Failed, unexpected error")
-	}
-
-	if got == fs.ErrExist {
-		t.Errorf("Failed, unexpected error")
-	}
-
-	if got != ErrCustomExists {
-		t.Errorf("Failed, unexpected error")
-	}
+if got == nil {
+	t.Errorf("Failed, unexpected error")
 }
+
+if got == fs.ErrExist {
+	t.Errorf("Failed, unexpected error")
+}
+
+if got != ErrCustomExists {
+	t.Errorf("Failed, unexpected error")
+}
+
 ```
