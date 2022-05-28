@@ -41,8 +41,7 @@ Also Must has support *MustWith0, MustWith2, MustWith3, MustWith4* and *MustWith
 got := func() (err error) {
     defer yeh.Recover(&err)
 
-    outputValue := yeh.MustWith(os.Open("file.not.exists.txt"))
-    .Replace(ErrCustomExists)
+    outputValue := yeh.MustWith(os.Open("file.not.exists.txt")).Replace(ErrCustomExists)
 
     fmt.Printf("Output: %d\n", outputValue)
 
